@@ -1,0 +1,24 @@
+Aux			DCD		0xc20a0000
+			ldr		R1,=Aux
+			
+			bl		sinal
+			bl		expoentereal
+			bl		mantissa
+			
+fim			END
+			
+sinal		ldr		R2,[R1]
+			lsr		R0,R2,#31
+			mov		PC,LR
+			
+expoentereal	ldr		R2,[R1]
+			lsl		R2,R2,#1
+			lsr		R2,R2,#24
+			sub		R0,R2,#127
+			mov		PC,LR
+			
+mantissa		ldr		R2,[R1]
+			lsl		R2,R2,#9
+			lsr		R2,R2,#9
+			add		R0,R2,#0x800000
+			mov		PC,LR

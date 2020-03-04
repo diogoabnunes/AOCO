@@ -1,0 +1,33 @@
+Trabalho 2 AOCO
+
+1. Análise e simulação de um programa em assembly
+
+	(a) Indique o endereço de memória onde está guardado o tamanho da sequência seqA
+(tseqA).
+	R: 0x11C
+
+	(b) Qual é a posição de memória do 4o elemento da sequência seqA?
+	R: 0x10C
+
+	(c) Quantos bytes ocupa a sequência seqA em memória?
+	R: 28
+
+	(d) Quantas vezes é executada a instrução lsl R2, R2, #1? (Dica: Use breakpoints.)
+	R: 7
+
+	(e) Indique qual ou quais as linhas de código que alteram o valor do registo R1. (Dica:
+Consulte o histórico dos valores do registo.)
+	R: Linhas 6 e 12.
+
+	(f) Indique quais são os valores de seqA após a execução do programa.
+	R: 0x6, 0xFFFFFFF6, 0x2A, 0x4, 0xFFFFFFEC, 0x64, 0x12.
+
+	(g) Repita a alínea anterior após alterar o valor de tseqA para 3.
+	R: 0x6, 0xFFFFFFF6, 0x2A.
+
+	(h) Se substituir a instrução lsl R2, R2, #1 por lsl R2, R2, #3, que funcionalidade
+adquire o programa?
+	R: Multiplica por 8 em vez de 2.
+ 
+
+

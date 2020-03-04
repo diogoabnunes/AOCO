@@ -1,0 +1,71 @@
+NumA				DCD		0x40900000 ; número A
+NumB				DCD		0xc0700000 ; número B
+				
+main				ldr		R0,=NumA ; R0 contém o endereço do número A
+				ldr		R1,=NumB ; R1 contém o endereço do número B
+				
+				bl		soma ; sub_rotina soma
+				
+fim				end		; fim
+				
+				
+soma						
+				mov		PC,LR	; resultado da soma em R0
+				
+sinal			ldr		R2,[R0]
+				lsr		R2,R2,#31
+				mov		PC,LR	; coloca em R2 o valor do sinal
+				
+expoente			ldr		R3,[R0]
+				lsl		R3,R3,#1
+				lsr		R3,R3,#24
+				sub		R3,R3,#127
+				mov		PC,LR	; coloca em R3 o valor do expoente
+				
+mantissa			ldr		R4,[R0]
+				lsl		R4,R4,#9
+				lsr		R4,R4,#9
+				add		R4,R4,#0x800000
+				mov		PC,LR	; coloca em R4 o valor da mantissa
+				
+normaliza			cmp		R0,;#0?
+				bmi		normaliza_cont
+				lsr		R0,R0,#1
+				add		R1,R1,#1
+				b		normaliza
+				
+normaliza_cont		cmp		R0,;#0?
+				bpl		normaliza_fim
+				lsl		?
+				sub		?
+				b		normaliza_cont
+				
+normaliza_fim		mov		PC,LR
+				
+				
+subtracao			cmp		R1,#0	; compara número B com 0
+				eorne	R1,R1,#0x80000000	; se número B é negativo,
+				mov		R11,LR	; guarda LR em R11 para chamar sub_rotina dentro de outra
+				bl		soma		; realiza a operação soma
+				mov		PC,R11	; retorna a instrução seguinte, guardada em R11
+				
+				
+calcshiftbits		mov		R2,#0	; R2 vai conter o número de shifts necessários
+calcshiftbits_ciclo	lsrs		R0,R0,#1	; faz shift e atualiza flags
+				bcs		calcshiftbits_fim	; se C = 1: termina o cálculo
+				lsrs		R1,R1,#1	; faz shift e atualiza flags
+				bcs		calcshiftbits_fim	; se C = 1: termina o cálculo
+				add		R2,R2,#1	; R2 acresce em 1 (shift)
+				b		calcshiftbits_ciclo	; se C = 0, volta a repetir o ciclo
+				
+calcshiftbits_fim	mov		R0,R2
+				mov		PC,LR
+				
+				
+				
+				
+				
+				
+				
+				
+				
